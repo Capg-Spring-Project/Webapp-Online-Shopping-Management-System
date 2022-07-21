@@ -9,7 +9,7 @@ const BuyMedicineComponent = () => {
             <img class='mx-auto pic'
                 src="https://i.imgur.com/kXUgBQZ.jpg"/>
             <div class="card-title d-flex px-4">
-                <p class="item text-muted">Barcelona<label class="register">&reg;</label> Chair</p>
+                <p class="item text-muted">Barcelona<label class="register">&reg;</label> </p>
                 <p>$5760</p>
             </div>
             <div class="card-body">

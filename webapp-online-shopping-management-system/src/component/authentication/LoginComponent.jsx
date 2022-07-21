@@ -1,55 +1,151 @@
-import React from 'react'
 import '../../css/LoginComponent.css'
+import { useFormik } from "formik";
+import * as Yup from 'yup';
+import AuthenticationService from '../../service/AuthenticationService';
+import { useNavigate } from 'react-router-dom';
 
 const LoginComponent = () => {
+    let navigate = useNavigate();
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [role, setRole] = useState("");
+
+    const handleLogin = (user) => {
+        // console.log(email, password, role);
+        AuthenticationService.login(user.email, user.password, user.role).then(
+            () => {
+                navigate("/profile");
+                // window.location.reload();
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        );
+    };
+
+    const validationSchema = Yup.object().shape({
+
+        email: Yup.string().required("Email is required").email("Email is invalid"),
+        password: Yup.string()
+            .required("Password is required")
+    });
+
+    const formik = useFormik({
+        initialValues: {
+
+            email: "",
+            password: "",
+            role: "user"
+        },
+        validationSchema,
+        // validateOnChange: false,
+        // validateOnBlur: false,
+        onSubmit: (data) => {
+            console.log(JSON.stringify(data, null, 2));
+            let user = {
+                email: data.email,
+                password: data.password,
+                role: data.role
+            }
+            handleLogin(user);
+        },
+    });
+
     return (
+        <>
 
-        <div>
+            <div className="login-form">
 
-            <div class="login-form">
-                <form action="/examples/actions/confiration.php" method="post">
-                    
+                <form onSubmit={formik.handleSubmit}>
+                    <div className='form-group'>
+                        <h2 className="text-center">Log in</h2>
+                        <br />
+                        <div className="text-center">
+                            <div className="form-check form-check-inline" >
 
+                                <input
+                                    name="role"
+                                    type="radio"
+                                    className="form-check-input"
+                                    onChange={formik.handleChange}
+                                    value='user'
+                                    id='radioUser'
+                                    defaultChecked={true}
 
-                    <h2 class="text-center">Log in</h2>
-                    <br/>
-                    <div className="row justify-content-center">
-                        <div className="col-md-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                                <label class="form-check-label" for="flexRadioDefault1">
+                                />
+                                <label className="form-check-label" htmlFor="radioUser">
                                     User
                                 </label>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
-                                <label class="form-check-label" for="flexRadioDefault2">
+                            <div className="form-check form-check-inline" >
+
+                                <input
+                                    name="role"
+                                    type="radio"
+                                    className="form-check-input"
+                                    onChange={formik.handleChange}
+                                    value='admin'
+                                    id='radioAdmin'
+                                />
+                                <label className="form-check-label" htmlFor="radioAdmin">
                                     Admin
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <br/>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Username" required="required" />
+                    <br />
+                    <div className="form-group">
+                        <input
+                            name="email"
+                            type="email"
+                            className="form-control"
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                            placeholder='Email'
+                        />
+                        <div className="text-danger">
+                            {formik.errors.email ? formik.errors.email : null}
+                        </div>
                     </div>
-                    <br/>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password" required="required" />
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
-                    </div>
+                    <br />
+                    <div className="form-group">
 
+                        <input
+                            name="password"
+                            type="password"
+                            className="form-control"
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                            placeholder='Password'
+                        />
+                        <div className="text-danger">
+                            {formik.errors.password ? formik.errors.password : null}
+                        </div>
+                    </div>
+                    <br />
+                    <div className="form-group">
+                        <button type="submit" className="btn btn-primary">
+                            Login
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-warning float-end"
+                            onClick={formik.handleReset}
+                        >
+                            Reset
+                        </button>
+                    </div>
                 </form>
-                <p class="text-center"><a href="#">Create an Account</a></p>
+                <p className="text-center">Create an Account</p>
             </div>
-
-        </div>
-    )
+        </>
+    );
 }
 
 export default LoginComponent
