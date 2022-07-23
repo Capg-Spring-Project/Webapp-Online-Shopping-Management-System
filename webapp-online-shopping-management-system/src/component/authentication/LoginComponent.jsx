@@ -142,7 +142,6 @@ const LoginComponent = () => {
                         </button>
                     </div>
                 </form>
-                <p className="text-center">Create an Account</p>
             </div>
         </>
     );

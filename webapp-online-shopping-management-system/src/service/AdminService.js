@@ -36,6 +36,15 @@ const getAllMedicines = () => {
     return axios.get(API_URL_COMMONS + '/medicines');
 }
 
+const getMedicineByIdWithRelations = async (id) => {
+    const medicineResponse = await axios.get(API_URL_MEDICINE + '/' + id, { headers: authenticationHeader() });
+    const medicine = medicineResponse.data;
+    const categoryResponse = await axios.get(API_URL_COMMONS + '/category-of-medicine/' + medicineResponse.data.id);
+    const category = categoryResponse.data;
+    medicine.category = category;
+    return medicine;
+}
+
 const getAllMedicinesWithRelations = async () => {
     const response = await getAllMedicines();
     const medicines = response.data;
@@ -47,13 +56,9 @@ const getAllMedicinesWithRelations = async () => {
     return medicines;
 }
 
-// const saveMedicine = (customer) => {
-//     return axios.post(API_URL + "/customer/save",{
-//         params: {
-//             customer: customer
-//         }
-//      { headers: authenticationHeader(), });
-// };
+const getCategoryById = async (id) => {
+    return await axios.get(API_URL_CATEGORY+ '/' + id + id);
+}
 
 const deleteCustomerById = (id) => {
     return axios.get(API_URL_ADMIN + "/customer/delete" + id, { headers: authenticationHeader(), });
@@ -74,7 +79,13 @@ const deleteItemById = (id, itemType) => {
     }
 }
 
+const saveMedicine = (medicine) =>  {
+    return axios.post(API_URL_MEDICINE + "/save", medicine, { headers: authenticationHeader(), });
+}
 
+const saveCategory = (category) =>  {
+    return axios.post(API_URL_CATEGORY + "/save", category, { headers: authenticationHeader(), });
+}
 
 const AdminService = {
     getAllCustomers,
@@ -83,6 +94,10 @@ const AdminService = {
     getAllOrders,
     getAllOrdersWithRelations,
     getAllMedicinesWithRelations,
-    deleteItemById
+    deleteItemById,
+    getMedicineByIdWithRelations,
+    getCategoryById,
+    saveCategory,
+    saveMedicine
 }
 export default AdminService;

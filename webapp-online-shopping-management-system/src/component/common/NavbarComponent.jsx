@@ -40,9 +40,9 @@ const NavbarComponent = () => {
     return (
         <div>
             <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <Link to={"/"} className="navbar-brand ms-5">
+                <div  className="navbar-brand ms-5">
                     Medicine Shop
-                </Link>
+                </div>
 
                 <div className="navbar-nav mr-auto">
                     {!showAdminBoard && currentUser && (
@@ -56,7 +56,7 @@ const NavbarComponent = () => {
                         <>
 
                             <li className="nav-item">
-                                <Link to={"/admin"} className="nav-link">
+                                <Link to={"/user/dashboard"} className="nav-link">
                                     Profile
                                 </Link>
                             </li>

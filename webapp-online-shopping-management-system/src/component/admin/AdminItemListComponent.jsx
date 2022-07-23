@@ -70,6 +70,14 @@ const AdminItemListComponent = () => {
         navigate('/admin/orders', { state: { id } });
     }
 
+    const addButtonClicked = () => {
+        if(itemType === 'medicine') {
+            navigate('/admin/add-medicine');
+        } else if(itemType === 'category') {
+            navigate('/admin/add-category');
+        }
+    }
+
     const medicinesButtonClicked = (id) => {
         navigate('/admin/medicines', { state: { id } });
     }
@@ -81,7 +89,12 @@ const AdminItemListComponent = () => {
     }
 
     const updateButtonClicked = (id) => {
-        navigate('/admin/update-item', { state: { id, itemType: itemType } });
+        if(itemType === 'medicine') {
+            navigate('/admin/update-medicine', { state: { id } });
+        } else if(itemType === 'category') {
+            navigate('/admin/update-category', { state: { id} });
+        }
+        
     }
 
     const item = items?.map((item, index) => {
@@ -154,7 +167,7 @@ const AdminItemListComponent = () => {
                                 {(itemType === 'medicine' && <>Medicines</>)}
                             </b></h2></div>
                             <div className="col-sm-4 text-end">
-                                {itemType !== 'customer' && itemType !== 'order' && (<button type="button" className="btn btn-success"><i className="fa fa-plus"></i> Add New</button>)}
+                                {itemType !== 'customer' && itemType !== 'order' && (<button type="button" className="btn btn-success" onClick={() => addButtonClicked()}><i className="fa fa-plus"></i> Add New</button>)}
 
                             </div>
                         </div>
