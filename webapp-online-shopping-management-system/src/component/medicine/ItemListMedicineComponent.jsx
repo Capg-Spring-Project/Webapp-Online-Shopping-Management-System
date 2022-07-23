@@ -11,7 +11,6 @@ const ItemListMedicineComponent = (props) => {
     useEffect(() => {
         CommonService.getCategoryByMedicineId(props.medicine.id)
         .then(response => {
-            console.log(response.data);
             setCategory(response.data);
         }).catch(e => {
             console.log(e);
@@ -21,21 +20,10 @@ const ItemListMedicineComponent = (props) => {
     return (
         <div>
             <div className="row p-2 bg-white border rounded">
-                {/* <div className="col-md-3 mt-1"><img className="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg" /></div> */}
-                <div className="col-md-3 mt-1"><img className="img-fluid img-responsive rounded product-image" src={PlaceholderImage} /></div>
+                <div className="col-md-3 mt-1"><img className="img-fluid img-responsive rounded product-image" src={PlaceholderImage} alt='img'/></div>
                 <div className="col-md-6 mt-1">
                     <h5>{props.medicine.name}</h5>
                     <div className="d-flex flex-row">
-
-                                        {/* "companyName": "string",
-                                        "expiryDate": "2022-07-21",
-                                        "id": 0,
-                                        "manufacturingDate": "2022-07-21",
-                                        "name": "string",
-                                        
-                                        "price": 0 */}
-
-
                         <div className="mt-1 mb-1 spec-1"><span>{props.medicine.companyName}</span></div>
                     </div>
                     <h6 className="text-success">{category.name}</h6>

@@ -2,15 +2,31 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import AuthenticationService from '../../service/AuthenticationService';
+import LoginComponent from "./LoginComponent";
 
 const SignUpComponent = () => {
     let navigate = useNavigate();
-    const handleLogin = (user) => {
-        if(user.role === 'admin') {
+    const handleSignUp = (user) => {
+        if (user.role === 'admin') {
             AuthenticationService.registerAdmin(user).then(
                 () => {
-                    navigate("/profile");
-                    // window.location.reload();
+                    console.log(user.email, user.password, user.role);
+                    AuthenticationService.login(user.email, user.password, `admin`).then(
+                        () => {
+                            navigate("/home");
+                            window.location.reload();
+                        },
+                        (error) => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            console.log(resMessage);
+                        }
+                    );
+
                 },
                 (error) => {
                     const resMessage =
@@ -25,9 +41,22 @@ const SignUpComponent = () => {
         } else {
             AuthenticationService.registerCustomer(user).then(
                 (response) => {
-                    console.log(response);
-                    navigate("/profile");
-                    // window.location.reload();
+                    console.log(user);
+                    AuthenticationService.login(user.email, user.password, `user`).then(
+                        () => {
+                            navigate("/home");
+                            window.location.reload();
+                        },
+                        (error) => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            console.log(resMessage);
+                        }
+                    );
                 },
                 (error) => {
                     const resMessage =
@@ -75,8 +104,7 @@ const SignUpComponent = () => {
                 password,
                 role
             }
-            console.log(JSON.stringify(data, null, 2));
-            handleLogin(user);
+            handleSignUp(user);
         }
     });
     return (

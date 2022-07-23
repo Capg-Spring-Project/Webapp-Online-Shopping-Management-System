@@ -1,7 +1,6 @@
 {
     "name": "webapp-online-shopping-management-system",
     "version": "0.1.0",
-    "homepage": "https://Capg-Spring-Project.github.io/Webapp-Online-Shopping-Management-System",
     "private": true,
     "dependencies": {
         "@hookform/resolvers": "^2.9.6",

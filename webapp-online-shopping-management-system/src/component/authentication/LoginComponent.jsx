@@ -14,8 +14,8 @@ const LoginComponent = () => {
         // console.log(email, password, role);
         AuthenticationService.login(user.email, user.password, user.role).then(
             () => {
-                navigate("/profile");
-                // window.location.reload();
+                navigate("/home");
+                window.location.reload();
             },
             (error) => {
                 const resMessage =

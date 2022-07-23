@@ -3,7 +3,7 @@ import authenticationHeader from "./AuthenticationHeader";
 
 const API_URL = "http://localhost:4040/authentication";
 const registerAdmin = (admin) => {
-    return axios.post(API_URL + "register-admin", admin);
+    return axios.post(API_URL + "/register-admin", admin);
 };
 
 const registerCustomer = (customer) => {
@@ -42,12 +42,17 @@ const getLoggedCustomer = () => {
     return axios.get(API_URL + "/customer/get-logged-in", { headers: authenticationHeader() });
 };
 
+const getLoggedAdmin = () => {
+    return axios.get(API_URL + "/admin/get-logged-in", { headers: authenticationHeader() });
+};
+
 const AuthenticationService = {
     registerAdmin,
     registerCustomer,
     login,
     logout,
     getCurrentToken,
-    getLoggedCustomer
+    getLoggedCustomer,
+    getLoggedAdmin
 };
 export default AuthenticationService;
