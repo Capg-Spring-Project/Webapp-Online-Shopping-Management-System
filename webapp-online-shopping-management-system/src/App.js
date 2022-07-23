@@ -6,9 +6,8 @@ import SignUpComponent from './component/authentication/SignUpComponent';
 import NavbarComponent from './component/common/NavbarComponent';
 import { Routes, Route } from 'react-router-dom';
 import CustomerDashboardComponent from './component/customer/CustomerDashboardComponent'
-import AdminMedicineListComponent from './component/admin/AdminMedicineListComponent'
 import AdminItemListComponent from './component/admin/AdminItemListComponent'
-import AdminOrderListComponent from './component/admin/AdminOrderListComponent'
+import AdminEditItemComponent from './component/admin/AdminEditItemComponent'
 import CustomerOrdersComponent from './component/customer/CustomerOrdersComponent';
 import ListMedicineComponent from './component/medicine/ListMedicineComponent';
 import AdminDashBoardComponent from './component/admin/AdminDashboardComponent'
@@ -24,6 +23,7 @@ function App() {
                         <Route path='categories' element={<AdminItemListComponent/>}></Route>
                         <Route path='customers' element={<AdminItemListComponent/>}></Route>
                         <Route path='orders' element={<AdminItemListComponent/>}></Route>
+                        <Route path='update-item' element={<AdminEditItemComponent/>}/>
                         <Route index element={<AdminDashBoardComponent />} />
                     </Route>
                     <Route path="login" element={<LoginComponent />} />

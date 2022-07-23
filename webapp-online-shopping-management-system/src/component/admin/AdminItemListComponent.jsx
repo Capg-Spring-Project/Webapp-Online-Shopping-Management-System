@@ -70,7 +70,7 @@ const AdminItemListComponent = () => {
         navigate('/admin/orders', { state: { id } });
     }
 
-    const medicinesButtonClicked =  (id) => {
+    const medicinesButtonClicked = (id) => {
         navigate('/admin/medicines', { state: { id } });
     }
 
@@ -102,9 +102,9 @@ const AdminItemListComponent = () => {
 
                     <td>
                         {(itemType === 'customer' && <button className="btn btn-primary mx-1" title="Orders" data-toggle="tooltip"><i className="material-icons" onClick={() => { ordersButtonClicked(item.id) }}>Orders</i></button>)}
-                        {(itemType === 'category' && <button className="btn btn-primary mx-1" title="Medicines" data-toggle="tooltip"><i className="material-icons"onClick={() => { medicinesButtonClicked(item.id) }}>Medicines</i></button>)}
-                        {(itemType === 'category' && <button className="btn btn-success mx-1" title="Edit" data-toggle="tooltip"><i className="material-icons"onClick={() => { updateButtonClicked(item.id) }}>Update</i></button>)}
-                        <button className="btn btn-danger" title="Delete" data-toggle="tooltip"><i className="material-icons"  onClick={()=> {deleteButtonClicked(item.id)}}>Delete</i></button>
+                        {(itemType === 'category' && <button className="btn btn-primary mx-1" title="Medicines" data-toggle="tooltip"><i className="material-icons" onClick={() => { medicinesButtonClicked(item.id) }}>Medicines</i></button>)}
+                        {(itemType === 'category' && <button className="btn btn-success mx-1" title="Edit" data-toggle="tooltip"><i className="material-icons" onClick={() => { updateButtonClicked(item.id) }}>Update</i></button>)}
+                        <button className="btn btn-danger" title="Delete" data-toggle="tooltip"><i className="material-icons" onClick={() => { deleteButtonClicked(item.id) }}>Delete</i></button>
                     </td>
                 </tr>
             </tbody>
@@ -130,8 +130,8 @@ const AdminItemListComponent = () => {
                             <h4 className="mr-1">₹{medicine.price}</h4>
                         </div>
                         <div className="d-flex flex-column mt-4">
-                            <button className="btn btn-primary btn-sm" type="button" onClick={()=> {updateButtonClicked(medicine.id)}}>UPDATE</button>
-                            <button className="btn btn-danger btn-sm mt-2" type="button" onClick={()=> {deleteButtonClicked(medicine.id)}}>DELETE</button></div>
+                            <button className="btn btn-primary btn-sm" type="button" onClick={() => { updateButtonClicked(medicine.id) }}>UPDATE</button>
+                            <button className="btn btn-danger btn-sm mt-2" type="button" onClick={() => { deleteButtonClicked(medicine.id) }}>DELETE</button></div>
                     </div>
                 </div>
                 <br />
@@ -143,42 +143,42 @@ const AdminItemListComponent = () => {
     return (
         <div>
             <div className="container">
-                
-                    <div className="table-wrapper">
-                        <div className="table-title">
-                            <div className="row ">
-                                <div className="col-sm-8"><h2><b>
-                                    {(itemType === 'customer' && <>Customer Details</>)}
-                                    {(itemType === 'category' && <>Categories</>)}
-                                    {(itemType === 'order' && <>Orders</>)}
-                                    {(itemType === 'medicine' && <>Medicines</>)}
-                                </b></h2></div>
-                                <div className="col-sm-4 text-end">
-                                    {itemType !== 'customer' && itemType !== 'order' && (<button type="button" className="btn btn-success"><i className="fa fa-plus"></i> Add New</button>)}
 
-                                </div>
+                <div className="table-wrapper">
+                    <div className="table-title">
+                        <div className="row ">
+                            <div className="col-sm-8"><h2><b>
+                                {(itemType === 'customer' && <>Customer Details</>)}
+                                {(itemType === 'category' && <>Categories</>)}
+                                {(itemType === 'order' && <>Orders</>)}
+                                {(itemType === 'medicine' && <>Medicines</>)}
+                            </b></h2></div>
+                            <div className="col-sm-4 text-end">
+                                {itemType !== 'customer' && itemType !== 'order' && (<button type="button" className="btn btn-success"><i className="fa fa-plus"></i> Add New</button>)}
+
                             </div>
                         </div>
-                        {(itemType === 'medicine' && <>{medicine}</>)}
-                        {(itemType !== 'medicine' &&<table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    {(itemType !== 'order' && <th>Name</th>)}
-                                    {(itemType === 'order' && <th>Medicine</th>)}
-                                    {(itemType === 'order' && <th>Price</th>)}
-                                    {(itemType === 'order' && <th>Customer</th>)}
-                                    {(itemType === 'order' && <th>Customer Email</th>)}
-                                    {(itemType === 'order' && <th>Date</th>)}
-                                    {(itemType === 'order' && <th>Quantity</th>)}
-                                    {(itemType === 'order' && <th>Total Cost</th>)}
-                                    {(itemType === 'customer' && <th>Email</th>)}
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            {/* //TABLE ITEM HERE */}
-                            {item}
-                        </table>)}
                     </div>
+                    {(itemType === 'medicine' && <>{medicine}</>)}
+                    {(itemType !== 'medicine' && <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                {(itemType !== 'order' && <th>Name</th>)}
+                                {(itemType === 'order' && <th>Medicine</th>)}
+                                {(itemType === 'order' && <th>Price</th>)}
+                                {(itemType === 'order' && <th>Customer</th>)}
+                                {(itemType === 'order' && <th>Customer Email</th>)}
+                                {(itemType === 'order' && <th>Date</th>)}
+                                {(itemType === 'order' && <th>Quantity</th>)}
+                                {(itemType === 'order' && <th>Total Cost</th>)}
+                                {(itemType === 'customer' && <th>Email</th>)}
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        {/* //TABLE ITEM HERE */}
+                        {item}
+                    </table>)}
+                </div>
             </div>
         </div>
     )
