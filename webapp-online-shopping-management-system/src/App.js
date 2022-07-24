@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BuyMedicineComponent from './component/medicine/BuyMedicineComponent';
 import LoginComponent from './component/authentication/LoginComponent';
-import SignUpComponent from './component/authentication/SignUpComponent';
+import SignUpUpdateComponent from './component/authentication/SignUpUpdateComponent';
 import NavbarComponent from './component/common/NavbarComponent';
 import { Routes, Route } from 'react-router-dom';
 import UserDashboardComponent from './component/common/UserDashboardComponent'
@@ -32,7 +32,7 @@ function App() {
                         <Route index element={<UserDashboardComponent />} />
                     </Route>
                     <Route path="login" element={<LoginComponent />} />
-                    <Route path="account-setup" element={<SignUpComponent />} />
+                    <Route path="account-setup" element={<SignUpUpdateComponent />} />
                     <Route path="user" >
                         <Route path="buy" element={<BuyMedicineComponent />} />
                         <Route path="orders" element={<CustomerOrdersComponent />} />

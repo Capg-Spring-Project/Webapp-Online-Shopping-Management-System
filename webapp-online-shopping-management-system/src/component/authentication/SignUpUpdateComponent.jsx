@@ -5,7 +5,7 @@ import AuthenticationService from '../../service/AuthenticationService';
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
-const SignUpComponent = () => {
+const SignUpUpdateComponent = () => {
     let navigate = useNavigate();
     const [updatingUser, setUpdatingUser] = useState();
     const [userId, setUserId] = useState();
@@ -147,7 +147,10 @@ const SignUpComponent = () => {
             <div className="login-form">
                 <form onSubmit={formik.handleSubmit}>
                     <div className='form=group'>
-                        <h2 className="text-center">Sign Up</h2>
+                        <h2 className="text-center">
+                            {!updatingUser&& (<>Sign Up</>)}
+                            {updatingUser&& (<>Update Profile</>)}
+                        </h2>
                         <br />
                         {!updatingUser && (<div className="text-center">
                             <div className="form-check form-check-inline" >
@@ -282,4 +285,4 @@ const SignUpComponent = () => {
     );
 }
 
-export default SignUpComponent
+export default SignUpUpdateComponent
