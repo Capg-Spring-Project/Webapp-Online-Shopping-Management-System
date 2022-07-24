@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
-import '../../css/CustomerDashboard.css'
-import PlaceholderImage from '../../image/customer/customer_dashboard_medicine.png';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import '../../css/UserDashboard.css'
+import PlaceholderImage from '../../image/user/user_dashboard_medicine.png';
 import AuthenticationService from '../../service/AuthenticationService';
 
 
-const CustomerDashboardComponent = () => {
+const UserDashboardComponent = () => {
     const [user, setUser] = useState({});
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const initialize = async () => {
@@ -15,7 +16,7 @@ const CustomerDashboardComponent = () => {
             if (location.pathname.includes('user')) {
                 user = await AuthenticationService.getLoggedAdmin();
             } else if (location.pathname.includes('admin')) {
-                user = await AuthenticationService.getLoggedCustomer();
+                user = await AuthenticationService.getLoggedUser();
             }
             console.log(user);
             setUser(user.data);
@@ -31,7 +32,7 @@ const CustomerDashboardComponent = () => {
                         <div className="col">
                             <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
                                 <ol className="breadcrumb mb-0">
-                                    <li className="breadcrumb-item active" aria-current="page">Edit Profile</li>
+                                <li className="breadcrumb-item active" aria-current="page"><Link to={'/account-setup'} class=" text-reset text-decoration-none" > Edit Profile</Link></li>
                                 </ol>
                             </nav>
                         </div>
@@ -76,4 +77,4 @@ const CustomerDashboardComponent = () => {
     )
 }
 
-export default CustomerDashboardComponent
+export default UserDashboardComponent

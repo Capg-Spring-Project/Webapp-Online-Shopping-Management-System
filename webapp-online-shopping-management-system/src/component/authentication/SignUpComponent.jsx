@@ -2,15 +2,47 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import AuthenticationService from '../../service/AuthenticationService';
-import LoginComponent from "./LoginComponent";
+import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
 
 const SignUpComponent = () => {
     let navigate = useNavigate();
+    const [updatingUser, setUpdatingUser] = useState();
+    const [userId, setUserId] = useState();
+    const [userRole, setUserRole] = useState('');
+
+    useEffect(() => {
+        const handleIfLoggedIn = async () => {
+            let user;
+            const token = AuthenticationService.getCurrentToken();
+            if (token) {
+                user = jwtDecode(token.jwt);
+                try {
+                    if (user.isAdmin) {
+                        setUserRole('admin');
+                        user = await AuthenticationService.getLoggedAdmin();
+                    } else {
+                        setUserRole('user');
+                        user = await AuthenticationService.getLoggedCustomer();
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+
+            }
+            setUserId(user?.data.id);
+            setUpdatingUser(user.data);
+        }
+        handleIfLoggedIn();
+    }, []);
+
     const handleSignUp = (user) => {
+        if (updatingUser) {
+            user.role = userRole;
+        }
         if (user.role === 'admin') {
             AuthenticationService.registerAdmin(user).then(
                 () => {
-                    console.log(user.email, user.password, user.role);
                     AuthenticationService.login(user.email, user.password, `admin`).then(
                         () => {
                             navigate("/home");
@@ -39,6 +71,7 @@ const SignUpComponent = () => {
                 }
             );
         } else {
+            console.log(user);
             AuthenticationService.registerCustomer(user).then(
                 (response) => {
                     console.log(user);
@@ -85,13 +118,14 @@ const SignUpComponent = () => {
     });
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            fullname: "",
-            email: "",
+            fullname: updatingUser?.name || "",
+            email: updatingUser?.email || "",
             password: "",
             confirmPassword: "",
             acceptTerms: false,
-            role: "user"
+            role: updatingUser?.role || "user"
         },
         validationSchema,
         // validateOnChange: false,
@@ -99,6 +133,7 @@ const SignUpComponent = () => {
         onSubmit: (data) => {
             const { fullname, email, password, role } = data;
             const user = {
+                id: userId,
                 name: fullname,
                 email,
                 password,
@@ -114,7 +149,7 @@ const SignUpComponent = () => {
                     <div className='form=group'>
                         <h2 className="text-center">Sign Up</h2>
                         <br />
-                        <div className="text-center">
+                        {!updatingUser && (<div className="text-center">
                             <div className="form-check form-check-inline" >
 
                                 <input
@@ -145,7 +180,7 @@ const SignUpComponent = () => {
                                     Admin
                                 </label>
                             </div>
-                        </div>
+                        </div>)}
                     </div>
 
 

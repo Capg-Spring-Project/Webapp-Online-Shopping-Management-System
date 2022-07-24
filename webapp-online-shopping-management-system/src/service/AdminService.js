@@ -12,7 +12,7 @@ const getAllCustomers = () => {
 };
 
 const getAllCategories = () => {
-    return axios.get(API_URL_CATEGORY, { headers: authenticationHeader(), });
+    return axios.get(API_URL_CATEGORY, { headers: authenticationHeader() });
 };
 
 const getAllOrders = () => {
@@ -36,6 +36,10 @@ const getAllMedicines = () => {
     return axios.get(API_URL_COMMONS + '/medicines');
 }
 
+const getMedicineById = (id) => {
+    return axios.get(API_URL_MEDICINE + '/' + id, { headers: authenticationHeader() });
+}
+
 const getMedicineByIdWithRelations = async (id) => {
     const medicineResponse = await axios.get(API_URL_MEDICINE + '/' + id, { headers: authenticationHeader() });
     const medicine = medicineResponse.data;
@@ -57,7 +61,7 @@ const getAllMedicinesWithRelations = async () => {
 }
 
 const getCategoryById = async (id) => {
-    return await axios.get(API_URL_CATEGORY+ '/' + id + id);
+    return await axios.get(API_URL_CATEGORY+ '/' + id);
 }
 
 const deleteCustomerById = (id) => {
@@ -83,6 +87,10 @@ const saveMedicine = (medicine) =>  {
     return axios.post(API_URL_MEDICINE + "/save", medicine, { headers: authenticationHeader(), });
 }
 
+const assignMedicineToCategory = (medicineId, categoryId) =>  {
+    return axios.post(`${API_URL_MEDICINE}/${medicineId}/assign-category/${categoryId}`, { headers: authenticationHeader() });
+}
+
 const saveCategory = (category) =>  {
     return axios.post(API_URL_CATEGORY + "/save", category, { headers: authenticationHeader(), });
 }
@@ -98,6 +106,8 @@ const AdminService = {
     getMedicineByIdWithRelations,
     getCategoryById,
     saveCategory,
-    saveMedicine
+    saveMedicine,
+    assignMedicineToCategory,
+    getMedicineById
 }
 export default AdminService;

@@ -16,44 +16,33 @@ const AdminCategorySaveComponent = () => {
         if (location.state) {
             setItemId(location.state.id);
         }
-
     }, [itemId, location?.state?.id]);
 
     useEffect(() => {
         if (location.state) {
             const handleItems = async () => {
                 try {
-                    const res = await AdminService.getCategoryById(itemId);
-                    setItem(res.data);
+                    if (itemId) {
+                        const res = await AdminService.getCategoryById(itemId);
+                        setItem(res.data);
+                    }
+
                 } catch (e) {
                     console.log(e);
                 }
             }
             handleItems();
         }
-
-    }, [ itemId])
+    }, [itemId])
 
     const handleSave = async (data) => {
         try {
-
             const res = await AdminService.saveCategory(data);
-            console.log(res);
-            console.log(data);
-            navigate('/admin/caregories');
-
+            navigate('/admin/categories');
         } catch (e) {
             console.log(e);
         }
     };
-
-    const parseDateString = (originalValue) => {
-        const parsedDate = isDate(originalValue)
-            ? originalValue  // this make sure that a value is provided
-            : parse(originalValue, "dd/MM/yyyy", new Date());
-        return parsedDate;
-    }
-
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required")
@@ -82,6 +71,9 @@ const AdminCategorySaveComponent = () => {
             handleSave(category);
         },
     });
+
+
+
 
     return (
         <>

@@ -27,10 +27,10 @@ const CustomerOrdersComponent = () => {
             <tbody key={index}>
                 <tr>
                     <td>{order?.medicine?.name}</td>
-                    <td>{order?.medicine?.price}</td>
+                    <td>₹{order?.medicine?.price}</td>
                     <td>{order?.orderDate}</td>
                     <td>{order?.quantity}</td>
-                    <td>{(Number(order?.quantity * order?.medicine?.price) || 0)}</td>
+                    <td>₹{(Number(order?.quantity * order?.medicine?.price) || 0)}</td>
 
                 </tr>
             </tbody>

@@ -5,7 +5,7 @@ import LoginComponent from './component/authentication/LoginComponent';
 import SignUpComponent from './component/authentication/SignUpComponent';
 import NavbarComponent from './component/common/NavbarComponent';
 import { Routes, Route } from 'react-router-dom';
-import CustomerDashboardComponent from './component/customer/CustomerDashboardComponent'
+import UserDashboardComponent from './component/common/UserDashboardComponent'
 import AdminItemListComponent from './component/admin/AdminItemListComponent'
 import AdminMedicineSaveComponent from './component/admin/AdminMedicineSaveComponent'
 import AdminCategorySaveComponent from './component/admin/AdminCategorySaveComponent'
@@ -21,6 +21,7 @@ function App() {
                 <Route path="/" >
                     <Route path="admin" >
                         <Route path='medicines' element={<AdminItemListComponent/>}></Route>
+                        <Route path="dashboard" element={<UserDashboardComponent />} />
                         <Route path='categories' element={<AdminItemListComponent/>}></Route>
                         <Route path='customers' element={<AdminItemListComponent/>}></Route>
                         <Route path='orders' element={<AdminItemListComponent/>}></Route>
@@ -28,18 +29,17 @@ function App() {
                         <Route path='add-medicine' element={<AdminMedicineSaveComponent/>}/>
                         <Route path='update-category' element={<AdminCategorySaveComponent/>}/>
                         <Route path='add-category' element={<AdminCategorySaveComponent/>}/>
-                        <Route index element={<CustomerDashboardComponent />} />
+                        <Route index element={<UserDashboardComponent />} />
                     </Route>
                     <Route path="login" element={<LoginComponent />} />
-                    <Route path="signup" element={<SignUpComponent />} />
+                    <Route path="account-setup" element={<SignUpComponent />} />
                     <Route path="user" >
                         <Route path="buy" element={<BuyMedicineComponent />} />
                         <Route path="orders" element={<CustomerOrdersComponent />} />
-                        <Route path="dashboard" element={<CustomerDashboardComponent />} />
+                        <Route path="dashboard" element={<UserDashboardComponent />} />
                         <Route path="success" element={<OrderSuccessComponent />} />
                         <Route index element={<ListMedicineComponent />} />
                     </Route>
-
                     <Route index element={<ListMedicineComponent />} />
                 </Route>
                 <Route path='/home' element={<ListMedicineComponent />} />

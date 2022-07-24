@@ -12,36 +12,33 @@ const AdminMedicineSaveComponent = () => {
     const [itemType, setItemType] = useState();
     const [itemId, setItemId] = useState();
     const [item, setItem] = useState({});
+    const [categoryId, setCategoryId] = useState();
+    const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         if (location.state) {
             setItemId(location.state.id);
             setItemType(location.state.itemType);
         }
+        const handleCategories = async () => {
+            const categories = await AdminService.getAllCategories();
+            console.log(categories.data)
+            setCategories(categories.data);
+        }
+        handleCategories();
 
     }, [itemId, itemType, location?.state?.id, location?.state?.itemType]);
 
     useEffect(() => {
         if (location.state) {
             const handleItems = async () => {
-
                 try {
-                    if (itemType === 'medicine') {
-                        const medicine = await AdminService.getAllMedicinesWithRelations(itemId);
-                        setItem(medicine[0]);
-                        console.log(medicine[0].name, item.price);
-                        // setInitialValues({
-                        //     name: 'aa',
-                        //     price: medicine[0].price,
-                        //     companyName: medicine[0].companyName,
-                        //     manufacturingDate: medicine[0].manufacturingDate,
-                        //     expiryDate: medicine[0].expiryDate,
-                        // });
-
-                    } else if (itemType === 'category') {
-                        const res = await AdminService.getCategoryById(itemId);
-                        setItem(res.data);
+                    if (itemId) {
+                        const medicine = await AdminService.getMedicineById(itemId);
+                        setItem(medicine.data);
+                        console.log(medicine.data, item.price);
                     }
+
 
                 } catch (e) {
                     console.log(e);
@@ -54,12 +51,14 @@ const AdminMedicineSaveComponent = () => {
 
     const handleSave = async (data) => {
         try {
+            const res = await AdminService.saveMedicine(data);
+            let id = categoryId;
+            if(!id) {
+               id = categories[0].id;
+            }
+            await AdminService.assignMedicineToCategory(res.data.id, id);
+            navigate('/admin/medicines');
 
-                const res = await AdminService.saveMedicine(data);
-                console.log(res);
-                console.log(data);
-                navigate('/admin/medicines');
-            
         } catch (e) {
             console.log(e);
         }
@@ -119,6 +118,13 @@ const AdminMedicineSaveComponent = () => {
             handleSave(medicine);
         },
     });
+
+    const onDropdownSelected = async (e) => {
+        const selectedIndex = e.target.options.selectedIndex;
+        const categoryId = e.target.options[selectedIndex].getAttribute('categoryId');
+        setCategoryId(categoryId);
+
+    };
 
     return (
         <>
@@ -196,6 +202,14 @@ const AdminMedicineSaveComponent = () => {
                         <div className="text-danger">
                             {formik.errors.expiryDate ? formik.errors.expiryDate : null}
                         </div>
+                    </div>
+                    <br />
+                    <div className='form-group'>
+                        <select className='form-select' name="categories" onChange={onDropdownSelected}>
+                            {categories?.map((category) => {
+                                return <option key={category.id} categoryId={category.id}>{category.name}</option>;
+                            })}
+                        </select>
                     </div>
                     <br />
                     <div className="form-group">
