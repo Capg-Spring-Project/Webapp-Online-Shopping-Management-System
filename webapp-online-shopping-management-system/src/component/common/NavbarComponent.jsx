@@ -94,6 +94,11 @@ const NavbarComponent = () => {
                                     Orders
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to={"user/cart"} className="nav-link">
+                                    Cart
+                                </Link>
+                            </li>
                         </>
                     )}
                 </div>

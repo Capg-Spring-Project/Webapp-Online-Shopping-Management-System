@@ -94,7 +94,6 @@ const AdminItemListComponent = () => {
         } else if(itemType === 'category') {
             navigate('/admin/update-category', { state: { id} });
         }
-        
     }
 
     const item = items?.map((item, index) => {
@@ -109,10 +108,7 @@ const AdminItemListComponent = () => {
                     {(itemType === 'order' && <td>{item?.orderDate}</td>)}
                     {(itemType === 'order' && <td>{item?.quantity}</td>)}
                     {(itemType === 'order' && <td>{(Number(item?.quantity * item?.medicine?.price) || 0)}</td>)}
-
                     {(itemType === 'customer' && <td>{item.email}</td>)}
-
-
                     <td>
                         {(itemType === 'customer' && <button className="btn btn-primary mx-1" title="Orders" data-toggle="tooltip"><i className="material-icons" onClick={() => { ordersButtonClicked(item.id) }}>Orders</i></button>)}
                         {(itemType === 'category' && <button className="btn btn-primary mx-1" title="Medicines" data-toggle="tooltip"><i className="material-icons" onClick={() => { medicinesButtonClicked(item.id) }}>Medicines</i></button>)}
@@ -156,7 +152,6 @@ const AdminItemListComponent = () => {
     return (
         <div>
             <div className="container">
-
                 <div className="table-wrapper">
                     <div className="table-title">
                         <div className="row ">

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/MedicineListComponent.css';
 import PlaceholderImage from '../../image/medicine/placeholder_medicine.webp';
+import AuthenticationService from '../../service/AuthenticationService';
 import CommonService from '../../service/CommonService';
+import CustomerService from '../../service/CustomerService';
 
 const ItemListMedicineComponent = (props) => {
     const navigate = useNavigate();
     const [category, setCategory] = useState({});
+    const [inCart, setInCart] = useState(false);
 
     useEffect(() => {
         CommonService.getCategoryByMedicineId(props.medicine.id)
@@ -15,6 +18,14 @@ const ItemListMedicineComponent = (props) => {
             }).catch(e => {
                 console.log(e);
             });
+        const handleCart = async () => {
+            const custoemrRes = await AuthenticationService.getLoggedCustomer();
+            const customer = custoemrRes.data;
+            const inCart = customer.cartMedicines.some(med => med.id === props.medicine.id);
+            setInCart(inCart);
+        }
+        handleCart();
+
     }, [props.medicine.id])
 
     const buyButtonClicked = (medicine) => {
@@ -24,6 +35,19 @@ const ItemListMedicineComponent = (props) => {
 
             navigate('/user/buy', { state: { medicine } });
         }
+    }
+
+    const cartButtonClicked = async (medicine) => {
+        const custoemrRes = await AuthenticationService.getLoggedCustomer();
+            const customer = custoemrRes.data;
+        if (!inCart) {
+            await CustomerService.addMedicineToCustomer(customer.id, medicine.id);
+            setInCart(true);
+        } else {
+            await CustomerService.removeMedicineFromCustomer(customer.id, medicine.id);
+            setInCart(false);
+        }
+
     }
 
     return (
@@ -45,7 +69,9 @@ const ItemListMedicineComponent = (props) => {
                     </div>
                     <div className="d-flex flex-column mt-4">
                         <button className="btn btn-primary btn-sm" type="button" onClick={() => { buyButtonClicked(props.medicine) }}>Buy Now</button>
-                        <button className="btn btn-outline-primary btn-sm mt-2" type="button">Add to cart</button></div>
+                        {!inCart && (<button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={() => { cartButtonClicked(props.medicine) }}>Add to cart</button>)}
+                        {inCart && (<button className="btn btn-danger btn-sm mt-2" type="button" onClick={() => { cartButtonClicked(props.medicine) }}>Remove from Cart</button>)}
+                    </div>
                 </div>
             </div>
         </div>

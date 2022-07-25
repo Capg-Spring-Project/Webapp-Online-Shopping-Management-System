@@ -11,6 +11,7 @@ const BuyMedicineComponent = () => {
     const location = useLocation();
     const [medicine, setMedicine] = useState([]);
     const [quantity, setQuantity] = useState(1);
+    
     useEffect(() => {
         setMedicine(location.state.medicine);
     },[])

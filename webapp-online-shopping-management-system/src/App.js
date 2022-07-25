@@ -12,6 +12,7 @@ import AdminCategorySaveComponent from './component/admin/AdminCategorySaveCompo
 import CustomerOrdersComponent from './component/customer/CustomerOrdersComponent';
 import ListMedicineComponent from './component/medicine/ListMedicineComponent';
 import OrderSuccessComponent from './component/medicine/OrderSuccessComponent';
+import CustomerCartListMedicineComponent from './component/customer/CustomerCartListMedicineComponent';
 
 function App() {
     return (
@@ -38,6 +39,7 @@ function App() {
                         <Route path="orders" element={<CustomerOrdersComponent />} />
                         <Route path="dashboard" element={<UserDashboardComponent />} />
                         <Route path="success" element={<OrderSuccessComponent />} />
+                        <Route path="cart" element={<CustomerCartListMedicineComponent />} />
                         <Route index element={<ListMedicineComponent />} />
                     </Route>
                     <Route index element={<ListMedicineComponent />} />
