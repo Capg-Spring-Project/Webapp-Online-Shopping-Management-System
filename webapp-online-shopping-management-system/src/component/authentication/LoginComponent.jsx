@@ -3,15 +3,14 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import AuthenticationService from '../../service/AuthenticationService';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const LoginComponent = () => {
     let navigate = useNavigate();
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [role, setRole] = useState("");
+    const [error, setError] = useState('');
+    const [viewError, setViewError] = useState(false);
 
     const handleLogin = (user) => {
-        // console.log(email, password, role);
         AuthenticationService.login(user.email, user.password, user.role).then(
             () => {
                 navigate("/home");
@@ -25,6 +24,8 @@ const LoginComponent = () => {
                     error.message ||
                     error.toString();
                 console.log(resMessage);
+                setError(resMessage);
+                setViewError(true);
             }
         );
     };
@@ -44,10 +45,7 @@ const LoginComponent = () => {
             role: "user"
         },
         validationSchema,
-        // validateOnChange: false,
-        // validateOnBlur: false,
         onSubmit: (data) => {
-            console.log(JSON.stringify(data, null, 2));
             let user = {
                 email: data.email,
                 password: data.password,
@@ -55,6 +53,9 @@ const LoginComponent = () => {
             }
             handleLogin(user);
         },
+        onReset: ( )=> {
+            setViewError(false);
+        }
     });
 
     return (
@@ -100,6 +101,9 @@ const LoginComponent = () => {
                         </div>
                     </div>
                     <br />
+                     {viewError && (<div className="text-danger text-center">
+                        <p>{error}</p>
+                    </div>)}
                     <div className="form-group">
                         <input
                             name="email"

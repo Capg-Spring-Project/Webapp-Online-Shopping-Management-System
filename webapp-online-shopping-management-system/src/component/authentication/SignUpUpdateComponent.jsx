@@ -10,6 +10,8 @@ const SignUpUpdateComponent = () => {
     const [updatingUser, setUpdatingUser] = useState();
     const [userId, setUserId] = useState();
     const [userRole, setUserRole] = useState('');
+    const [error, setError] = useState('');
+    const [viewError, setViewError] = useState(false);
 
     useEffect(() => {
         const handleIfLoggedIn = async () => {
@@ -26,12 +28,13 @@ const SignUpUpdateComponent = () => {
                         user = await AuthenticationService.getLoggedCustomer();
                     }
                 } catch (e) {
-                    console.log(e);
+                    setError(e.message);
+                    setViewError(true);
                 }
 
             }
             setUserId(user?.data.id);
-            setUpdatingUser(user.data);
+            setUpdatingUser(user?.data);
         }
         handleIfLoggedIn();
     }, []);
@@ -56,6 +59,8 @@ const SignUpUpdateComponent = () => {
                                 error.message ||
                                 error.toString();
                             console.log(resMessage);
+                            setError(resMessage);
+                    setViewError(true);
                         }
                     );
 
@@ -68,6 +73,8 @@ const SignUpUpdateComponent = () => {
                         error.message ||
                         error.toString();
                     console.log(resMessage);
+                    setError(resMessage);
+                    setViewError(true);
                 }
             );
         } else {
@@ -88,6 +95,8 @@ const SignUpUpdateComponent = () => {
                                 error.message ||
                                 error.toString();
                             console.log(resMessage);
+                            setError(resMessage);
+                            setViewError(true);
                         }
                     );
                 },
@@ -99,6 +108,8 @@ const SignUpUpdateComponent = () => {
                         error.message ||
                         error.toString();
                     console.log(resMessage);
+                    setError(resMessage);
+                    setViewError(true);
                 }
             );
         }
@@ -128,8 +139,6 @@ const SignUpUpdateComponent = () => {
             role: updatingUser?.role || "user"
         },
         validationSchema,
-        // validateOnChange: false,
-        // validateOnBlur: false,
         onSubmit: (data) => {
             const { fullname, email, password, role } = data;
             const user = {
@@ -140,6 +149,9 @@ const SignUpUpdateComponent = () => {
                 role
             }
             handleSignUp(user);
+        },
+        onReset: () => {
+            setViewError(false);
         }
     });
     return (
@@ -148,8 +160,8 @@ const SignUpUpdateComponent = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <div className='form=group'>
                         <h2 className="text-center">
-                            {!updatingUser&& (<>Sign Up</>)}
-                            {updatingUser&& (<>Update Profile</>)}
+                            {!updatingUser && (<>Sign Up</>)}
+                            {updatingUser && (<>Update Profile</>)}
                         </h2>
                         <br />
                         {!updatingUser && (<div className="text-center">
@@ -185,10 +197,11 @@ const SignUpUpdateComponent = () => {
                             </div>
                         </div>)}
                     </div>
-
-
-
                     <br />
+
+                    {viewError && (<div className="text-danger text-center">
+                        <p>{error}</p>
+                    </div>)}
                     <div className="form-group">
                         <label>Full Name</label>
                         <input

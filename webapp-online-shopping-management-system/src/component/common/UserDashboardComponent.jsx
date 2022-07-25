@@ -8,17 +8,15 @@ import AuthenticationService from '../../service/AuthenticationService';
 const UserDashboardComponent = () => {
     const [user, setUser] = useState({});
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const initialize = async () => {
             let user = {};
             if (location.pathname.includes('user')) {
-                user = await AuthenticationService.getLoggedAdmin();
+                user = await AuthenticationService.getLoggedCustomer();
             } else if (location.pathname.includes('admin')) {
-                user = await AuthenticationService.getLoggedUser();
+                user = await AuthenticationService.getLoggedAdmin();
             }
-            console.log(user);
             setUser(user.data);
         }
         initialize();
