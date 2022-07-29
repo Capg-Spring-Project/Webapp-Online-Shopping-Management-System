@@ -39,14 +39,11 @@ const CustomerOrdersComponent = () => {
 
     return (
         <div>
-            {console.log(orders)}
             <div className="container">
-
                 <div className="table-wrapper">
                     <div className="table-title">
                         <div className="row ">
                             <div className="col-sm-8"><h2><b>
-
                                 Orders
                             </b></h2></div>
                         </div>
@@ -55,7 +52,6 @@ const CustomerOrdersComponent = () => {
                     <table className="table table-bordered">
                         <thead>
                             <tr>
-                                
                                 <th>Medicine</th>
                                 <th>Price</th>
                                 <th>Date</th>

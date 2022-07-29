@@ -27,18 +27,19 @@ const ListMedicineComponent = () => {
     const onDropdownSelected = async (e) => {
 
         const selectedIndex = e.target.options.selectedIndex;
-        const categoryId = e.target.options[selectedIndex].getAttribute('categoryId');
-        console.log(categoryId);
-        if (categoryId == -1) {
-            const medicines = CommonService.getAllMedicines();
-            setMedicines((await medicines).data);
-        } else {
-            const res = await AdminService.getCategoryById(categoryId);
-            console.log(res.data);
-            setMedicines(res?.data?.medicines);
+        const categoryid = e.target.options[selectedIndex].getAttribute('categoryid');
+        console.log(categoryid);
+        try {
+            if (categoryid === '-1') {
+                const medicines = await CommonService.getAllMedicines();
+                setMedicines(medicines.data);
+            } else {
+                const res = await AdminService.getCategoryById(categoryid);
+                console.log(res.data);
+                setMedicines(res?.data?.medicines);
 
-        }
-
+            }
+        } catch (e) { }
     };
 
     const medicineItems = medicines?.map((medicine, index) => {
@@ -61,11 +62,11 @@ const ListMedicineComponent = () => {
                                         <li className="breadcrumb-item active" aria-current="page">
                                             <div className="form-control-static">
                                                 <div className='form-group'>
-                                                    <label for="staticEmail" class="col-sm-2 col-form-label">Category</label>
+                                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Category</label>
                                                     <select className='form-select' name="categories" onChange={onDropdownSelected}>
-                                                        <option categoryId='-1'>All</option>
+                                                        <option categoryid='-1'>All</option>
                                                         {categories?.map((category) => {
-                                                            return <option key={category.id} categoryId={category.id}>{category.name}</option>;
+                                                            return <option key={category.id} categoryid={category.id}>{category.name}</option>;
                                                         })}
                                                     </select>
                                                 </div>
@@ -76,15 +77,7 @@ const ListMedicineComponent = () => {
                                 </nav>
                             </div>
                         </div>
-
-
                         {medicineItems}
-                        {/* <ItemListMedicineComponent />
-                        <div className="mt-2"></div>
-                        <ItemListMedicineComponent />
-                        <div className="mt-2"></div>
-                        <ItemListMedicineComponent />
-                        <div className="mt-2"></div>  */}
                     </div>
                 </div>
             </div>

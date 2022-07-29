@@ -8,9 +8,7 @@ const OrderSuccessComponent = () => {
                 <div class="col-12">
                     <br /><br /> <h2 style={{color:'#0fad00'}}>Success</h2>
                     <h3>Thank you</h3>
-                    
                 </div>
-
             </div>
         </div>
     )

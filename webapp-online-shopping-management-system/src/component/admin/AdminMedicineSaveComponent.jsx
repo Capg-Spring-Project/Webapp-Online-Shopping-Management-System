@@ -26,7 +26,7 @@ const AdminMedicineSaveComponent = () => {
             setCategories(categories.data);
         }
         handleCategories();
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemId, itemType, location?.state?.id, location?.state?.itemType]);
 
     useEffect(() => {
@@ -39,14 +39,13 @@ const AdminMedicineSaveComponent = () => {
                         console.log(medicine.data, item.price);
                     }
 
-
                 } catch (e) {
                     console.log(e);
                 }
             }
             handleItems();
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemType, itemId])
 
     const handleSave = async (data) => {

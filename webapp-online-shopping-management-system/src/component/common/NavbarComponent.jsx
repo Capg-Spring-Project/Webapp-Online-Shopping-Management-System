@@ -96,7 +96,7 @@ const NavbarComponent = () => {
                             </li>
                             <li className="nav-item">
                                 <Link to={"user/cart"} className="nav-link">
-                                    Cart
+                                    Wishlist
                                 </Link>
                             </li>
                         </>

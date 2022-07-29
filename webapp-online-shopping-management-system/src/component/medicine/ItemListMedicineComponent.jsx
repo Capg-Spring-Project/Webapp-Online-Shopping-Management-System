@@ -19,10 +19,14 @@ const ItemListMedicineComponent = (props) => {
                 console.log(e);
             });
         const handleCart = async () => {
-            const custoemrRes = await AuthenticationService.getLoggedCustomer();
-            const customer = custoemrRes.data;
-            const inCart = customer.cartMedicines.some(med => med.id === props.medicine.id);
-            setInCart(inCart);
+            try {
+                if (localStorage.getItem('user')) {
+                    const custoemrRes = await AuthenticationService.getLoggedCustomer();
+                    const customer = custoemrRes.data;
+                    const inCart = customer.cartMedicines.some(med => med.id === props.medicine.id);
+                    setInCart(inCart);
+                }
+            } catch (e) { }
         }
         handleCart();
 
@@ -38,15 +42,22 @@ const ItemListMedicineComponent = (props) => {
     }
 
     const cartButtonClicked = async (medicine) => {
-        const custoemrRes = await AuthenticationService.getLoggedCustomer();
-            const customer = custoemrRes.data;
-        if (!inCart) {
-            await CustomerService.addMedicineToCustomer(customer.id, medicine.id);
-            setInCart(true);
+        if (!localStorage.getItem('user')) {
+            navigate('/login')
         } else {
-            await CustomerService.removeMedicineFromCustomer(customer.id, medicine.id);
-            setInCart(false);
+            try {
+                const custoemrRes = await AuthenticationService.getLoggedCustomer();
+                const customer = custoemrRes.data;
+                if (!inCart) {
+                    await CustomerService.addMedicineToCustomer(customer.id, medicine.id);
+                    setInCart(true);
+                } else {
+                    await CustomerService.removeMedicineFromCustomer(customer.id, medicine.id);
+                    setInCart(false);
+                }
+            } catch (e) { }
         }
+
 
     }
 
@@ -69,8 +80,8 @@ const ItemListMedicineComponent = (props) => {
                     </div>
                     <div className="d-flex flex-column mt-4">
                         <button className="btn btn-primary btn-sm" type="button" onClick={() => { buyButtonClicked(props.medicine) }}>Buy Now</button>
-                        {!inCart && (<button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={() => { cartButtonClicked(props.medicine) }}>Add to cart</button>)}
-                        {inCart && (<button className="btn btn-danger btn-sm mt-2" type="button" onClick={() => { cartButtonClicked(props.medicine) }}>Remove from Cart</button>)}
+                        {!inCart && (<button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={() => { cartButtonClicked(props.medicine) }}>Add to Wishlist</button>)}
+                        {inCart && (<button className="btn btn-danger btn-sm mt-2" type="button" onClick={() => { cartButtonClicked(props.medicine) }}>Remove from Wishlist</button>)}
                     </div>
                 </div>
             </div>

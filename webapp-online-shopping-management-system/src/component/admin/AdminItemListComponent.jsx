@@ -58,9 +58,7 @@ const AdminItemListComponent = () => {
 
                 }
 
-            } catch (e) {
-                console.log(e.message);
-            }
+            } catch (e) {}
         }
         handleItems();
         // eslint-disable-next-line react-hooks/exhaustive-deps

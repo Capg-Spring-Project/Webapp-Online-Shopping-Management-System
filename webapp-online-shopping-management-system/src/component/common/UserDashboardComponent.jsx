@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../../css/UserDashboard.css'
 import PlaceholderImage from '../../image/user/user_dashboard_medicine.png';
 import AuthenticationService from '../../service/AuthenticationService';
@@ -20,6 +20,7 @@ const UserDashboardComponent = () => {
             setUser(user.data);
         }
         initialize();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -30,7 +31,7 @@ const UserDashboardComponent = () => {
                         <div className="col">
                             <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
                                 <ol className="breadcrumb mb-0">
-                                <li className="breadcrumb-item active" aria-current="page"><Link to={'/account-setup'} class=" text-reset text-decoration-none" > Edit Profile</Link></li>
+                                <li className="breadcrumb-item active" aria-current="page"><Link to={'/account-setup'} className=" text-reset text-decoration-none" > Edit Profile</Link></li>
                                 </ol>
                             </nav>
                         </div>

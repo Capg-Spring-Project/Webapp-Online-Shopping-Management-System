@@ -1,7 +1,6 @@
 import axios from "axios"
 
 const API_URL_COMMON = 'http://localhost:4040/commons';
-const API_URL_CATEGORY = 'http://localhost:4040/category';
 
 const getAllMedicines = () => {
     return axios.get(API_URL_COMMON + '/medicines');

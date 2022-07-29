@@ -14,6 +14,7 @@ const BuyMedicineComponent = () => {
     
     useEffect(() => {
         setMedicine(location.state.medicine);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const onQuantityChanged = e => {
@@ -43,8 +44,7 @@ const BuyMedicineComponent = () => {
     <div>
         <div className='container'>
         <div className="card mx-auto col-md-5 col-8 mt-3 p-0">
-            <img className='mx-auto pic'
-                src={placeholder}/>
+            <img className='mx-auto pic' src={placeholder} alt='med'/>
             <div className="card-title d-flex px-4">
                 <p className="item text-muted">{medicine?.name}<label className="register">&reg;</label> </p>
                 <p>₹{medicine?.price * quantity}</p>

@@ -13,8 +13,13 @@ const LoginComponent = () => {
     const handleLogin = (user) => {
         AuthenticationService.login(user.email, user.password, user.role).then(
             () => {
-                navigate("/home");
-                window.location.reload();
+                if(user.role === 'admin') {
+                    navigate("/user/dashboard");
+                    window.location.reload();
+                } else {
+                    navigate("/home");
+                    window.location.reload();
+                }
             },
             (error) => {
                 const resMessage =

@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AdminService from '../../service/AdminService';
-import { isDate, parse } from 'date-fns';
 
 const AdminCategorySaveComponent = () => {
     const navigate = useNavigate();
@@ -16,6 +15,7 @@ const AdminCategorySaveComponent = () => {
         if (location.state) {
             setItemId(location.state.id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemId, location?.state?.id]);
 
     useEffect(() => {
@@ -33,11 +33,12 @@ const AdminCategorySaveComponent = () => {
             }
             handleItems();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemId])
 
     const handleSave = async (data) => {
         try {
-            const res = await AdminService.saveCategory(data);
+            await AdminService.saveCategory(data);
             navigate('/admin/categories');
         } catch (e) {
             console.log(e);

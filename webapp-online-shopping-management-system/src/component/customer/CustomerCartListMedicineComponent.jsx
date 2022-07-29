@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ItemCustomerCartListMedicineComponent from '../medicine/ItemListMedicineComponent'
 import '../../css/MedicineListComponent.css'
-import CommonService from '../../service/CommonService'
-import AdminService from '../../service/AdminService'
-import CustomerService from '../../service/CustomerService'
 import AuthenticationService from '../../service/AuthenticationService'
 
 
@@ -40,7 +37,7 @@ const CustomerCartListMedicineComponent = () => {
                     <div className="col-md-10">
                         <div className="row">
                             <div className="col">
-                                <h3 className='text-center text-success'>Cart</h3>
+                                <h3 className='text-center text-success'>Wish List</h3>
                             </div>
                         </div>
 
